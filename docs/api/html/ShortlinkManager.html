@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Markdown-ContentProcessor - Indieinabox API</title>
+    <title>ShortlinkManager - Indieinabox API</title>
     <style>
         :root { --bg: #F4F1EA; --fg: #2C2E2F; --accent: #2C2E2F; }
         body { font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; margin: 0; display: flex; background: var(--bg); color: var(--fg); line-height: 1.6; }
@@ -69,52 +69,25 @@
 <li><a href="/docs/api/html/Yaml.html">Yaml</a></li></ul>
     </div>
     <div class="content">
-        <h1 class="p-name">ContentProcessor</h1>
-<p><strong>Namespace:</strong> <code>Indieinabox\Markdown</code></p>
-<p>Class ContentProcessor</p>
+        <h1 class="p-name">ShortlinkManager</h1>
+<p><strong>Namespace:</strong> <code>Indieinabox</code></p>
+<p>Class ShortlinkManager</p>
 <h2>Properties</h2>
-<h3><code>private Indieinabox\Markdown\ASTParser $astParser</code></h3>
-<p>@var ASTParser</p>
-<h3><code>private Indieinabox\Markdown\HtmlRenderer $htmlRenderer</code></h3>
-<p>@var HtmlRenderer</p>
+<h3><code>private string $cacheDir</code></h3>
+<p>@var string</p>
 <h2>Methods</h2>
 <h3><em></em>construct()</h3>
-<p><code>public function __construct()</code></p>
-<p>Method <em></em>construct</p>
-<h3>extractFrontMatter()</h3>
-<p><code>public function extractFrontMatter(string $content): array</code></p>
-<p>@param string $content</p>
-<p>@return array&lt;string, mixed&gt;</p>
-<h3>removeYamlFrontMatter()</h3>
-<p><code>public function removeYamlFrontMatter(string $content): string</code></p>
-<p>@param string $content</p>
-<p>@return string</p>
-<h3>setDate()</h3>
-<p><code>public function setDate(array $page, string $file): array</code></p>
-<p>Set the date from file modification time if not provided in frontmatter.</p>
-<p>@param array&lt;string, mixed&gt;  $page
-@param string $file
-@return array&lt;string, mixed&gt;</p>
-<h3>setTitle()</h3>
-<p><code>public function setTitle(array $page, string $content, string $defaultTitle): array</code></p>
-<p>@param array&lt;string, mixed&gt;  $page
-@param string $content
-@param string $defaultTitle</p>
-<p>@return array&lt;string, mixed&gt;</p>
-<h3>processTags()</h3>
-<p><code>public function processTags(array $page, string $content): array</code></p>
-<p>@param array&lt;string, mixed&gt;  $page
-@param string $content</p>
-<p>@return array&lt;string, mixed&gt;</p>
-<h3>processContent()</h3>
-<p><code>public function processContent(string $content, ?Indieinabox\Page $page = null): string</code></p>
-<p>@param string $content
-@param \Indieinabox\Page|null $page</p>
-<p>@return string</p>
-<h3>addTrailingSlashesToInternalLinks()</h3>
-<p><code>private function addTrailingSlashesToInternalLinks(string $content): string</code></p>
-<p>@param string $content</p>
-<p>@return string</p>
+<p><code>public function __construct(?string $cacheDir = null)</code></p>
+<p>@param string|null $cacheDir</p>
+<h3>getShortlink()</h3>
+<p><code>public function getShortlink(Indieinabox\Page $page, string $fqdn, array $config): ?string</code></p>
+<p>Gets a shortlink for a page, from cache or by requesting the server.</p>
+<p>@param Page $page
+@param string $fqdn
+@param array $config
+@return string|null</p>
+<h3>generateBoundary()</h3>
+<p><code>private static function generateBoundary(int $length = 24): string</code></p>
 
     </div>
 </body>
