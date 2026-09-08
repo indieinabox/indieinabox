@@ -272,16 +272,6 @@ EOF
 
     # 5. Cross-Interactions (Follows BEFORE Posts!)
     echo ">> Performing cross-interactions (Follows)..."
-    # Mastodon Follows Pixelfed, Misskey, and IndieInABox
-    docker exec mastodon_web bash -c "RAILS_ENV=production bundle exec rails runner \"
-      mastodon_account = Account.find_by(username: 'aaron')
-      ['aaron@${MISSKEY_DOMAIN}', 'aaron@${PIXELFED_DOMAIN}', 'aaron@${INDIEINABOX_DOMAIN}'].each do |uri|
-        begin
-          target = ResolveAccountService.new.call(uri)
-          FollowService.new.call(mastodon_account, target) if target
-          puts 'Mastodon followed: ' + uri
-        rescue => e
-          puts 'Mastodon follow error for ' + uri + ': ' + e.message
         end
       end
     \""
