@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page-Metadata - Indieinabox API</title>
+    <title>Webmention-PayloadParser - Indieinabox API</title>
     <style>
         :root { --bg: #F4F1EA; --fg: #2C2E2F; --accent: #2C2E2F; }
         body { font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; margin: 0; display: flex; background: var(--bg); color: var(--fg); line-height: 1.6; }
@@ -98,73 +98,62 @@
 <li><a href="/docs/api/html/Yaml.html">Yaml</a></li></ul>
     </div>
     <div class="content">
-        <h1 class="p-name">Metadata</h1>
-<p><strong>Namespace:</strong> <code>Indieinabox\Page</code></p>
-<p>Class Metadata</p>
-<p>This class handles metadata related to the page.</p>
-<h2>Properties</h2>
-<h3><code>public mixed $category</code></h3>
-<p>@var array<string></p>
-<h3><code>public mixed $tags</code></h3>
-<p>@var array<string></p>
-<h3><code>public mixed $title</code></h3>
-<p>@var string</p>
-<h3><code>public mixed $nick</code></h3>
-<p>@var string</p>
-<h3><code>public mixed $noauthor</code></h3>
-<p>@var bool</p>
-<h3><code>public mixed $kind</code></h3>
-<p>@var string</p>
-<h3><code>public mixed $layout</code></h3>
-<p>@var string</p>
-<h3><code>public mixed $maturity</code></h3>
-<p>@var string|null</p>
-<h3><code>public mixed $flowerbed</code></h3>
-<p>@var array<string>|null</p>
-<h3><code>public mixed $confidence</code></h3>
-<p>@var string|null</p>
-<h3><code>public mixed $importance</code></h3>
-<p>@var string|null</p>
-<h3><code>public mixed $menu</code></h3>
-<p>@var string|bool|null</p>
-<h3><code>public mixed $hide_title</code></h3>
-<p>@var bool</p>
-<h3><code>public mixed $hide_on_rss</code></h3>
-<p>@var bool|string</p>
-<h3><code>public mixed $menu_order</code></h3>
-<p>@var int|null</p>
-<h3><code>public mixed $translated_by_ia</code></h3>
-<p>@var bool|string|null</p>
-<h3><code>public mixed $description</code></h3>
-<p>@var string|null</p>
-<h3><code>public mixed $image</code></h3>
-<p>@var string|null</p>
-<h3><code>public mixed $image_alt</code></h3>
-<p>@var string|null</p>
-<h3><code>public mixed $syndication</code></h3>
-<p>@var array<string>|string|null</p>
+        <h1 class="p-name">PayloadParser</h1>
+<p><strong>Namespace:</strong> <code>Indieinabox\Webmention</code></p>
+<p>Class PayloadParser</p>
+<p>Parses remote HTML payloads using Microformats 2 (mf2) to extract rich IndieWeb metadata<br />
+(author h-card, photo, name, interaction types, and sanitized content).</p>
 <h2>Methods</h2>
-<h3><em></em>construct()</h3>
-<p><code>public function __construct(array $category = [], array $tags = [], string $title = &apos;Untitled&apos;, string $nick = &apos;untitled&apos;, bool $noauthor = false, string $kind = &apos;note&apos;, string $layout = &apos;page&apos;, ?string $maturity = null, mixed $menu = null, ?int $menu_order = null, bool $hide_title = false, mixed $hide_on_rss = false, mixed $translated_by_ia = null, ?string $description = null, ?string $image = null, ?string $image_alt = null)</code></p>
-<p>PageMetadata constructor.</p>
-<p>@param array<string> $category<br />
-@param array<string> $tags<br />
-@param string $title<br />
-@param string $nick<br />
-@param bool $noauthor<br />
-@param string $kind<br />
-@param string $layout<br />
-@param string|null $maturity<br />
-@param bool|null $menu<br />
-@param int|null $menu $tags<br />
-@param string $title<br />
-@param string $nick<br />
-@param bool $noauthor<br />
-@param string $kind<br />
-@param string $layout<br />
-@param string|null $maturity<br />
-@param bool|null $menu<br />
-@param int|null $menu_order</p>
+<h3>parse()</h3>
+<p><code>public static function parse(string $html, string $sourceUrl, ?string $targetUrl = null): array</code></p>
+<p>Parses source HTML and extracts normalized interaction and author metadata.</p>
+<p>@param string $html The fetched source HTML.<br />
+@param string $sourceUrl The source URL for relative reference resolution.<br />
+@param ?string $targetUrl The target URL to match interaction properties against.<br />
+@return array{<br />
+    title: string,<br />
+    text: string,<br />
+    html: string,<br />
+    author<em>name: string,<br />
+    author</em>photo: string,<br />
+    author<em>url: string,<br />
+    interaction</em>type: string,<br />
+    rsvp: ?string,<br />
+    published: ?string,<br />
+    whostyle: ?array<array-key, mixed><br />
+}</p>
+<h3>findItemByType()</h3>
+<p><code>private static function findItemByType(array $items, string $type): ?array</code></p>
+<p>Finds the first microformat item matching a given type prefix.</p>
+<p>@param array<int, mixed> $items<br />
+@param string $type<br />
+@return array<string, mixed>|null</p>
+<h3>extractAuthor()</h3>
+<p><code>public static function extractAuthor(?array $entry, array $items, string $sourceUrl): array</code></p>
+<p>Extracts author details (name, photo, URL) from entry or top-level h-cards.</p>
+<p>@param array<string, mixed>|null $entry<br />
+@param array<int, mixed> $items<br />
+@param string $sourceUrl<br />
+@return array{name: string, photo: string, url: string}</p>
+<h3>extractTitle()</h3>
+<p><code>private static function extractTitle(?array $entry, string $html): string</code></p>
+<p>Extracts title from entry properties or HTML <title> tag.</p>
+<p>@param array<string, mixed>|null $entry<br />
+@param string $html<br />
+@return string</p>
+<h3>extractContent()</h3>
+<p><code>private static function extractContent(?array $entry, string $html): array</code></p>
+<p>Extracts text and HTML content from entry e-content or DOM fallback.</p>
+<p>@param array<string, mixed>|null $entry<br />
+@param string $html<br />
+@return array{text: string, html: string}</p>
+<h3>detectInteractionType()</h3>
+<p><code>public static function detectInteractionType(?array $entry, ?string $targetUrl, string $sourceUrl): array</code></p>
+<p>Detects IndieWeb interaction type (like, repost, reply, bookmark, rsvp, or webmention).</p>
+<p>@param array<string, mixed>|null $entry<br />
+@param ?string $targetUrl<br />
+@param string $sourceUrl<br />
+@return array{type: string, rsvp: ?string}</p>
 
     </div>
 </body>
