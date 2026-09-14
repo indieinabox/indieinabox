@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Theme-ThemeHelper - Indieinabox API</title>
+    <title>Version - Indieinabox API</title>
     <style>
         :root { --bg: #F4F1EA; --fg: #2C2E2F; --accent: #2C2E2F; }
         body { font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; margin: 0; display: flex; background: var(--bg); color: var(--fg); line-height: 1.6; }
@@ -105,33 +105,31 @@
 <li><a href="/docs/api/html/Yaml.html">Yaml</a></li></ul>
     </div>
     <div class="content">
-        <h1 class="p-name">ThemeHelper</h1>
-<p><strong>Namespace:</strong> <code>Indieinabox\Theme</code></p>
-<p>Class ThemeHelper<br />
-Provides autonomous methods for themes to retrieve standard markup for pages,<br />
-abstracting away the low-level logic of metadata, interactions, syndication, etc.</p>
+        <h1 class="p-name">Version</h1>
+<p><strong>Namespace:</strong> <code>Indieinabox</code></p>
+<p>Class Version</p>
+<p>Provides application version information, git commit metadata, and build timestamps.</p>
 <h2>Methods</h2>
-<h3>getMetadataHtml()</h3>
-<p><code>public static function getMetadataHtml(Indieinabox\Page $page): string</code></p>
-<p>Renders the post metadata HTML (date, tags, shortlinks, interactions summary).</p>
-<h3>getIndieWebContext()</h3>
-<p><code>public static function getIndieWebContext(Indieinabox\Page $page): string</code></p>
-<p>Renders Indieweb properties context (e.g. in-reply-to, like-of, rsvp)</p>
-<h3>getAITranslationNotice()</h3>
-<p><code>public static function getAITranslationNotice(Indieinabox\Page $page): string</code></p>
-<p>Renders AI Translation Notice if present</p>
-<h3>getSyndicationLinks()</h3>
-<p><code>public static function getSyndicationLinks(Indieinabox\Page $page): string</code></p>
-<p>Renders Syndication Links (Also on...)</p>
-<h3>getInteractionsHtml()</h3>
-<p><code>public static function getInteractionsHtml(Indieinabox\Page $page): string</code></p>
-<p>Renders Interactions (Likes, Reposts, Replies)</p>
-<h3>renderPostSnippet()</h3>
-<p><code>public static function renderPostSnippet(Indieinabox\Page $contextPage, Indieinabox\Page $post): string</code></p>
-<p>Renders a post snippet for list views (like indices and taxonomies).</p>
-<p>@param Page $contextPage The page where this list is being rendered (for relative paths).<br />
-@param Page $post The post being rendered.<br />
-@return string</p>
+<h3>get()</h3>
+<p><code>public static function get(): string</code></p>
+<p>Gets the full version string including build metadata.</p>
+<p>@return string</p>
+<h3>getGitCommitHash()</h3>
+<p><code>public static function getGitCommitHash(): ?string</code></p>
+<p>Retrieves the short git commit hash if running within a git repository.</p>
+<p>@return string|null</p>
+<h3>getBaseVersion()</h3>
+<p><code>public static function getBaseVersion(): string</code></p>
+<p>Gets the base semantic version string.</p>
+<p>@return string</p>
+<h3>isCompiled()</h3>
+<p><code>public static function isCompiled(): bool</code></p>
+<p>Checks if the application is currently running as a single compiled executable.</p>
+<p>@return bool</p>
+<h3>getBuildDate()</h3>
+<p><code>public static function getBuildDate(): ?string</code></p>
+<p>Gets the build timestamp if available.</p>
+<p>@return string|null</p>
 
     </div>
 </body>
