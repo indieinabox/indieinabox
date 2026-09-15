@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webmention-SourceVerifier - Indieinabox API</title>
+    <title>Services-ConfigurationService - Indieinabox API</title>
     <style>
         :root { --bg: #F4F1EA; --fg: #2C2E2F; --accent: #2C2E2F; }
         body { font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; margin: 0; display: flex; background: var(--bg); color: var(--fg); line-height: 1.6; }
@@ -152,42 +152,60 @@
 <li><a href="/docs/api/html/Yaml.html">Yaml</a></li></ul>
     </div>
     <div class="content">
-        <h1 class="p-name">SourceVerifier</h1>
-<p><strong>Namespace:</strong> <code>Indieinabox\Webmention</code></p>
-<p>Class SourceVerifier</p>
-<p>Verifies that a remote source page links back to a local target URL,<br />
-and extracts microformats / metadata (title, e-content, Whostyles).</p>
+        <h1 class="p-name">ConfigurationService</h1>
+<p><strong>Namespace:</strong> <code>Indieinabox\Services</code></p>
+<p>Domain service managing site configuration, kind taxonomies, translations, and theme installations.</p>
 <h2>Properties</h2>
-<h3><code>private mixed $fetcher</code></h3>
-<p>@var callable|null Custom URL fetcher callable.</p>
+<h3><code>private PDO $db</code></h3>
 <h2>Methods</h2>
 <h3><em></em>construct()</h3>
-<p><code>public function __construct(?callable $fetcher = null)</code></p>
-<p>SourceVerifier constructor.</p>
-<p>@param ?callable $fetcher Optional callback to fetch remote URLs: fn(string $url): string|false.</p>
-<h3>verifySourceLink()</h3>
-<p><code>public function verifySourceLink(string $source, string $target): array</code></p>
-<p>Verifies that the source URL contains a link to target URL and extracts metadata.</p>
-<p>@param string $source<br />
-@param string $target<br />
-@return array{success: bool, message?: string, content?: array{title: string, text: string, whostyle?: array<array-key, mixed>|null}}</p>
-<h3>urlsMatch()</h3>
-<p><code>public function urlsMatch(string $href, string $target, string $source): bool</code></p>
-<p>Compares target and link href to check if they match, including relative links.</p>
-<p>@param string $href<br />
-@param string $target<br />
-@param string $source<br />
-@return bool</p>
-<h3>normalizeUrl()</h3>
-<p><code>public function normalizeUrl(string $url): string</code></p>
-<p>Normalizes a URL for canonical matching (resolves path segments and trailing slashes).</p>
-<p>@param string $url<br />
-@return string</p>
-<h3>fetchUrl()</h3>
-<p><code>public function fetchUrl(string $url): string|false</code></p>
-<p>Fetches remote URL content.</p>
-<p>@param string $url<br />
-@return string|false</p>
+<p><code>public function __construct(?PDO $db = null)</code></p>
+<h3>bootstrap()</h3>
+<p><code>public function bootstrap(string $password, string $sitename = &apos;My Site Name&apos;, string $fqdn = &apos;&apos;): void</code></p>
+<p>Initializes a fresh site installation with default configuration and admin credentials.</p>
+<h3>getSettings()</h3>
+<p><code>public function getSettings(): array</code></p>
+<p>Retrieves all configured site settings.</p>
+<p>@return array<string, mixed></p>
+<h3>saveSetting()</h3>
+<p><code>public function saveSetting(string $key, ?mixed $value): bool</code></p>
+<p>Saves or replaces a setting value in the database.</p>
+<h3>getKinds()</h3>
+<p><code>public function getKinds(): array</code></p>
+<p>Retrieves all kind configurations.</p>
+<p>@return array<string, mixed></p>
+<h3>saveKinds()</h3>
+<p><code>public function saveKinds(array $kinds): bool</code></p>
+<p>Saves or replaces kind taxonomies.</p>
+<p>@param array<string, mixed> $kinds</p>
+<h3>getTranslations()</h3>
+<p><code>public function getTranslations(): array</code></p>
+<p>Retrieves all language translations.</p>
+<p>@return array<string, mixed></p>
+<h3>saveTranslations()</h3>
+<p><code>public function saveTranslations(array $translations): bool</code></p>
+<p>Saves translations table.</p>
+<p>@param array<string, mixed> $translations</p>
+<h3>getUrlTranslations()</h3>
+<p><code>public function getUrlTranslations(): array</code></p>
+<p>Retrieves URL translations.</p>
+<p>@return array<string, mixed></p>
+<h3>saveUrlTranslations()</h3>
+<p><code>public function saveUrlTranslations(array $urlTranslations): bool</code></p>
+<p>Saves URL slug translations.</p>
+<p>@param array<string, mixed> $urlTranslations</p>
+<h3>detectPrettyLinksSupport()</h3>
+<p><code>public function detectPrettyLinksSupport(): bool</code></p>
+<p>Detects whether pretty links (clean URLs) are supported by the server environment.</p>
+<h3>rebuildSite()</h3>
+<p><code>public function rebuildSite(Indieinabox\Site $site): void</code></p>
+<p>Triggers static site generation.</p>
+<h3>installThemeFromUrl()</h3>
+<p><code>public function installThemeFromUrl(string $url): bool</code></p>
+<p>Installs a theme from a remote ZIP archive.</p>
+<h3>installThemeFromZip()</h3>
+<p><code>public function installThemeFromZip(string $zipPath): bool</code></p>
+<p>Extracts a theme ZIP archive into the themes directory.</p>
 
     </div>
 </body>
